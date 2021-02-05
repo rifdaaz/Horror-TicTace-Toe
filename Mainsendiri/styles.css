@@ -1,0 +1,190 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+
+}
+
+:root {
+    --cell-size: 100px;
+    --mark-size: calc(var(--cell-size) * .9);
+}
+
+body {
+    margin: 0;
+    margin:0;
+    padding:0;
+    font-size:12px;
+    background: white
+    url('bg.png') repeat 0 0;
+    background-size: auto 100%;
+    -webkit-animation: 20s linear 0s normal none infinite animate;
+    -moz-animation: 20s linear 0s normal none infinite animate;
+    -ms-animation: 20s linear 0s normal none infinite animate;
+    -o-animation: 20s linear 0s normal none infinite animate;
+    animation: 20s linear 0s normal none infinite animate;
+}
+@-webkit-keyframes animate {
+    from {background-position:0 0;}
+    to {background-position: 500px 0;}
+}
+@-moz-keyframes animate {
+    from {background-position:0 0;}
+    to {background-position: 500px 0;}
+}
+@-ms-keyframes animate {
+    from {background-position:0 0;}
+    to {background-position: 500px 0;}
+}
+@-o-keyframes animate {
+    from {background-position:0 0;}
+    to {background-position: 500px 0;}
+}
+@keyframes animate {
+    from {background-position:0 0;}
+    to {background-position: 500px 0;}
+}
+
+/*Kode papan tictactoe*/
+.board {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3, auto);
+
+}
+
+/*Kode untuk Baris dalam tictactoe*/
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    background-color: black;
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+/*Kode membuat garis pinggiran tictactoe
+dan menghilangkan beberapa garis tepi*/
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+    border-top: none;
+}
+.cell:nth-child(3n + 1) {
+    border-left: none;
+}
+.cell:nth-child(3n + 3) {
+    border-right: none;
+}
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+    border-bottom: none;
+}
+
+/*Kode cursor buat pointer*/
+.cell.x,
+.cell.circle {
+    cursor: not-allowed;
+}
+
+/*mengganti warna pointer X pada tictactoe 
+saat kursor menyentuh kotak*/
+.cell.x::before,
+.cell.x::after,
+.cell.circle::before {
+    background-color: white;
+}
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after, 
+.board.circle .cell:not(.x):not(.circle):hover::before{
+    background-color: rgb(95, 93, 93);
+}
+
+
+/*membuat X pada tictactoe*/
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    position: absolute;
+    width: calc(var(--mark-size) * .15);
+    height: var(--mark-size);
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    transform: rotate(-45deg);
+}
+
+
+/*membuat O pada tictactoe*/
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+    width: var(--mark-size);
+    height: var(--mark-size);
+}
+
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) * .7);
+    background-color: black;
+}
+
+/*membuat pesan menang*/
+.pesan-menang {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+
+.pesan-menang button {
+    font-size: 3rem;
+    border-radius:10px;
+    background-color: floralwhite;
+    border: 1px solid black;
+    padding: .25cm .5cm;
+    cursor: pointer;
+}
+
+.pesan-menang button:hover {
+    background-color: rgb(43, 7, 7);
+    color: rgb(206, 200, 200);
+    border-color: white;
+}
+
+.pesan-menang.show {
+    display: flex;
+}
